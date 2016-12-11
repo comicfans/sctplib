@@ -580,7 +580,7 @@ gint adl_open_sctp_socket(int af, int* myRwnd)
 #ifdef SCTP_OVER_UDP
     if ((sfd = socket(af, SOCK_RAW, IPPROTO_UDP)) < 0) {
 #else
-    if ((sfd = socket(af, SOCK_RAW, IPPROTO_SCTP)) < 0) {
+    if ((sfd = socket(af, SOCK_RAW, MY_IPPROTO_SCTP)) < 0) {
 #endif
         return sfd;
     }
@@ -592,8 +592,18 @@ gint adl_open_sctp_socket(int af, int* myRwnd)
 #ifdef HAVE_SIN_LEN
     me.sin_len         = sizeof(me);
 #endif
-    me.sin_addr.s_addr = INADDR_ANY;
+    inet_pton(AF_INET,"3.35.160.49",&me.sin_addr.s_addr);
     bind(sfd, (const struct sockaddr *)&me, sizeof(me));
+#endif
+
+#ifdef WIN32
+    unsigned  int optval=1;
+    DWORD dwBytesRet;
+    if(WSAIoctl(sfd,SIO_RCVALL,&optval,sizeof(optval),NULL,0,&dwBytesRet,NULL,NULL)==SOCKET_ERROR){
+        error_log(ERROR_FATAL,"can not receive all!");
+        return INVALID_SOCKET;
+    }
+
 #endif
 
     switch (af) {

@@ -100,9 +100,7 @@
 #define GRANULARITY		1
 
 /* Define a protocol id to be used in the IP Header..... */
-#ifndef IPPROTO_SCTP
-#define IPPROTO_SCTP    132
-#endif
+#define MY_IPPROTO_SCTP    1
 
 /** this parameter specifies the maximum number of addresses that an endpoint may have */
 #define MAX_NUM_ADDRESSES      32

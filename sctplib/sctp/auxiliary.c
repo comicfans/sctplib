@@ -64,6 +64,8 @@
 
 #define CRC32C(c,d) (c=(c>>8)^crc_c[(c^(d))&0xFF])
 
+#define uint32_t unsigned __int32
+
 uint32_t crc_c[256] =
 {
     0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4,

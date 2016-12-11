@@ -189,7 +189,9 @@ int debug_vwrite(FILE * fd, const char *format, va_list ap)
     struct tm *the_time;
 
     adl_gettime(&tv);
-    the_time = localtime((time_t *) & (tv.tv_sec));
+    time_t now=time(0);
+
+    the_time = localtime(&now);
 
     if (fprintf(fd, "%02d:%02d:%02d.%03d - ",
                 the_time->tm_hour,
@@ -260,7 +262,9 @@ void event_log1(short event_log_level, const char *module_name, const char *log_
             }
         }
         adl_gettime(&tv);
-        the_time = localtime((time_t *) & (tv.tv_sec));
+
+        time_t now = time(0);
+        the_time = localtime(&now);
         if (fileTrace == TRUE) {
             fprintf(logfile, "%02d:%02d:%02d.%03d - ",
                     the_time->tm_hour, the_time->tm_min, the_time->tm_sec, (int) (tv.tv_usec / 1000));
